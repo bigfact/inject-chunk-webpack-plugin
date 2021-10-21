@@ -1,0 +1,1 @@
+/** code start */console.log("hello, this is app");/** code end */
