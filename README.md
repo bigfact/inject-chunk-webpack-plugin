@@ -1,6 +1,6 @@
 # inject-chunk-webpack-plugin
 
-a simple Webpack plugin that inject chunks into any file
+A simple webpack plugin that inject chunks into any file
 
 ## Install
 
