@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/bigfact/inject-chunk-webpack-plugin.git"
+    "url": "git+ssh://git@github.com:bigfact/inject-chunk-webpack-plugin.git"
   },
   "keywords": [
     "webpack plugin",
@@ -17,7 +17,7 @@
   "author": "bigfact <bigfact@foxmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/bigfact/inject-chunk-webpack-plugin/issues"
+    "url": "https://github.com/bigfact/inject-chunk-webpack-plugin/issues"
   },
-  "homepage": "https://gitlab.com/bigfact/inject-chunk-webpack-plugin#readme"
+  "homepage": "https://github.com/bigfact/inject-chunk-webpack-plugin#readme"
 }
