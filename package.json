@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "a simple Webpack plugin that inject chunks into any file",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com:bigfact/inject-chunk-webpack-plugin.git"
