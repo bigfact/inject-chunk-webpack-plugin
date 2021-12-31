@@ -1,4 +1,5 @@
 const InjectChunkWebpackPlugin = require('../index')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 
 module.exports = {
@@ -12,19 +13,16 @@ module.exports = {
     publicPath: '/'
   },
   plugins: [
-    new InjectChunkWebpackPlugin([
-      {
-        chunkName: 'app',
-        filePath: './src/index.html',
-        startTag: '<!-- code start --><script>',
-        endTag: '</script><!-- code end -->'
-      },
-      {
-        chunkName: 'app',
-        filePath: './public/index.js',
-        startTag: '/** code start */',
-        endTag: '/** code end */'
-      }
-    ])
+    new HtmlWebpackPlugin({
+      filename: './index.html',
+      template: path.resolve(__dirname, './src/index.html'),
+      chunks: []
+    }),
+    new InjectChunkWebpackPlugin({
+      filename: './index.html', // === HtmlWebpackPlugin filename
+      chunks: ['app'],
+      startTag: '<script id="script-app">',
+      endTag: '</script>'
+    })
   ]
 }

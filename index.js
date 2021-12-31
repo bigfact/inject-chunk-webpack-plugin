@@ -3,24 +3,34 @@
  * @see {@link https://webpack.js.org/contribute/writing-a-plugin/}
  */
 
-const pluginName = 'InjectChunkWebpackPlugin'
-const fs = require('fs')
-const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const PluginName = 'InjectChunkWebpackPlugin'
 
 function handleRegxpTplStr(str = '') {
   return str.replace(/\*/g, '\\*').replace(/\//g, '\\/')
 }
 
-function replaceContentByCode(config, source) {
-  const filePath = path.resolve(process.cwd(), config.filePath)
+function replaceContentByCode(sourceHtml, config, injectString) {
   let reg = null
   if (!config.startTag || !config.startTag) {
     reg = /[\S\s]*/
   } else {
     reg = new RegExp(handleRegxpTplStr(config.startTag) + '[\\S\\s]*?' + handleRegxpTplStr(config.endTag))
-    source = config.startTag + source + config.endTag
+    injectString = config.startTag + injectString + config.endTag
   }
-  fs.writeFileSync(filePath, fs.readFileSync(filePath).toString().replace(reg, source))
+  return sourceHtml.replace(reg, injectString)
+}
+
+function findChunk(compilation = [], chunkNames = []) {
+  const result = []
+  compilation.chunks.forEach(chunk => {
+    if (chunkNames.indexOf(chunk.name) >= 0) {
+      chunk.files.forEach(chunkFileName => {
+        result.push(compilation.assets[chunkFileName].source())
+      })
+    }
+  })
+  return result.join('')
 }
 
 class InjectChunkWebpackPlugin {
@@ -29,16 +39,13 @@ class InjectChunkWebpackPlugin {
   }
 
   apply(compiler) {
-    compiler.hooks.emit.tap(pluginName, compilation => {
-      this.config.forEach(config => {
-        const chunks = [...compilation.chunks]
-        chunks
-          .filter(chunk => config.chunkName === chunk.name)
-          .forEach(chunk => {
-            chunk.files.forEach(chunkFileName => {
-              replaceContentByCode(config, compilation.assets[chunkFileName].source())
-            })
-          })
+    compiler.hooks.compilation.tap(PluginName, compilation => {
+      HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapAsync(PluginName, (data, cb) => {
+        if (data.plugin.options.filename === this.config.filename) {
+          const chunks = findChunk(compilation, this.config.chunks)
+          data.html = replaceContentByCode(data.html, this.config, chunks)
+        }
+        cb(null, data)
       })
     })
   }

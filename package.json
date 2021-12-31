@@ -1,7 +1,7 @@
 {
   "name": "inject-chunk-webpack-plugin",
-  "version": "1.0.0",
-  "description": "a simple Webpack plugin that inject chunks into any file",
+  "version": "2.0.0",
+  "description": "a simple Webpack plugin that inject chunks into html file",
   "main": "index.js",
   "scripts": {},
   "repository": {
@@ -9,13 +9,19 @@
     "url": "git+ssh://git@github.com:bigfact/inject-chunk-webpack-plugin.git"
   },
   "keywords": [
-    "webpack plugin",
-    "inject chunk"
+    "webpack",
+    "plugin",
+    "html",
+    "inject",
+    "chunk"
   ],
   "author": "bigfact <bigfact@foxmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/bigfact/inject-chunk-webpack-plugin/issues"
   },
-  "homepage": "https://github.com/bigfact/inject-chunk-webpack-plugin#readme"
+  "homepage": "https://github.com/bigfact/inject-chunk-webpack-plugin#readme",
+  "dependencies": {
+    "html-webpack-plugin": "^5.5.0"
+  }
 }

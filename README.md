@@ -14,6 +14,7 @@ npm install inject-chunk-webpack-plugin --save-dev
 
 ```js
 const InjectChunkWebpackPlugin = require('inject-chunk-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 
 module.exports = {
@@ -27,14 +28,17 @@ module.exports = {
     publicPath: '/'
   },
   plugins: [
-    new InjectChunkWebpackPlugin([
-      {
-        chunkName: 'app',
-        filePath: './index.html',
-        startTag: '<!-- code start --><script>',
-        endTag: '</script><!-- code end -->'
-      }
-    ])
+    new HtmlWebpackPlugin({
+      filename: './index.html',
+      template: path.resolve(__dirname, './src/index.html'),
+      chunks: []
+    }),
+    new InjectChunkWebpackPlugin({
+      filename: './index.html', // === HtmlWebpackPlugin filename
+      chunks: ['app'],
+      startTag: '<script id="script-app">',
+      endTag: '</script>'
+    })
   ]
 }
 ```
@@ -50,9 +54,7 @@ module.exports = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>inject-chunk-webpack-plugin-demo</title>
 
-    <!-- code start -->
-    <script></script>
-    <!-- code end -->
+    <script id="script-app"></script>
   </head>
 
   <body></body>
