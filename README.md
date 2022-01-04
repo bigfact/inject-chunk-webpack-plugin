@@ -1,6 +1,6 @@
 # inject-chunk-webpack-plugin
 
-A simple webpack plugin that inject chunks into any file
+A simple Webpack plugin that inject chunks/content into html file
 
 ## Install
 
@@ -35,6 +35,7 @@ module.exports = {
     }),
     new InjectChunkWebpackPlugin({
       filename: './index.html', // === HtmlWebpackPlugin filename
+      content: 'var a = 1;',
       chunks: ['app'],
       startTag: '<script id="script-app">',
       endTag: '</script>'

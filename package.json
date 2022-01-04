@@ -1,7 +1,7 @@
 {
   "name": "inject-chunk-webpack-plugin",
-  "version": "2.0.0",
-  "description": "a simple Webpack plugin that inject chunks into html file",
+  "version": "2.1.0",
+  "description": "A simple Webpack plugin that inject chunks/content into html file",
   "main": "index.js",
   "scripts": {},
   "repository": {
