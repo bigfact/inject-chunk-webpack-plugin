@@ -35,15 +35,26 @@ function findChunk(compilation = [], chunkNames = []) {
 
 class InjectChunkWebpackPlugin {
   constructor(config) {
-    this.config = config || []
+    this.config = config || {}
   }
 
   apply(compiler) {
     compiler.hooks.compilation.tap(PluginName, compilation => {
       HtmlWebpackPlugin.getHooks(compilation).beforeEmit.tapAsync(PluginName, (data, cb) => {
         if (data.plugin.options.filename === this.config.filename) {
-          const chunks = findChunk(compilation, this.config.chunks)
-          data.html = replaceContentByCode(data.html, this.config, chunks)
+          const injectContent = Object.keys(this.config)
+            .map(key => {
+              const val = this.config[key] || ''
+              if (key === 'content') {
+                return val
+              } else if (key === 'chunks') {
+                return findChunk(compilation, val)
+              }
+              return ''
+            })
+            .filter(el => !!el)
+            .join('')
+          data.html = replaceContentByCode(data.html, this.config, injectContent)
         }
         cb(null, data)
       })

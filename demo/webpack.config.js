@@ -20,6 +20,7 @@ module.exports = {
     }),
     new InjectChunkWebpackPlugin({
       filename: './index.html', // === HtmlWebpackPlugin filename
+      content: 'var a = 1;',
       chunks: ['app'],
       startTag: '<script id="script-app">',
       endTag: '</script>'
